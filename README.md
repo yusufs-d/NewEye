@@ -26,7 +26,6 @@ python -m venv newEyeEnv
   ```
   source newEyeEnv/bin/activate
   ```
-```
 5. Install the required libs for the project
 ```
 pip install -r requirements.txt
