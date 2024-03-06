@@ -14,5 +14,15 @@ cd NewEye
 ```
 pip install virtualenv
 ```
-
+```
+python -m venv newEyeEnv
+```
+### For windows
+```
+newEyeEnv\Scripts\activate
+```
+## For mac and linux
+```
+source newEyeEnv/bin/activate
+```
    
