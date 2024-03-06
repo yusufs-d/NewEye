@@ -18,11 +18,11 @@ pip install virtualenv
 python -m venv newEyeEnv
 ```
 4. Activate the virtual environment
-#### For windows
+4.1 #### For windows
 ```
 newEyeEnv\Scripts\activate
 ```
-#### For mac and linux
+4.2 #### For mac and linux
 ```
 source newEyeEnv/bin/activate
 ```
