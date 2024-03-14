@@ -34,4 +34,12 @@ pip install -r requirements.txt
 ```
 python3 detect.py --modeldir "sample_model"
 ```
+6. You can start taking screenshot process from the video you provided. Change "your_video.mp4" part with the path of your video.
+```
+python3 detect_video.py --modeldir "sample_model" --video "your_video.mp4"
+```
+6. Now you can start distance determination process
+```
+python3 services/DefineDistance.py
+```
    
