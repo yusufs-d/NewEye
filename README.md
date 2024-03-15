@@ -17,7 +17,7 @@ pip install virtualenv
 ```
 python -m venv newEyeEnv
 ```
-4. Activate the virtual environment
+4. Activate the virtual environment (Do this step every restart your terminal/cmd)
 - **For Windows**
   ```
   newEyeEnv\Scripts\activate
