@@ -1,4 +1,4 @@
-from ExcelControl import ExcelControl
+from services.ExcelControl import ExcelControl
 import os
 import cv2
 
@@ -11,60 +11,8 @@ class DefineDistance:
         self.files = os.listdir(self.directory)
         self.files_sorted = sorted(self.files)
 
-    def start(self):
-        counter = 0
-        while counter<len(self.files_sorted):
-            image_name = self.files_sorted[counter]
-            # Load the image
-            image = cv2.imread(os.path.join(self.directory, image_name))
 
-            # Check if the image was loaded successfully
-            if image is None:
-                print("Error: Unable to load image ", image_name)
-                continue
-            
-            print("Press '1' for tag the object as not close\nPress '2' for tag the object as close\nPress 'd' for delete the object\nPress 'b' to go backt to the previous image")
-
-            # Display the image
-            cv2.imshow(image_name, image)
-
-            with open("info.txt","r+") as file:
-                for line in file:
-                    if line.startswith("***"):
-                        break
-                    else:
-                        print(line)
-            # Wait for user input
-            key = cv2.waitKey(0)
-
-            # Check if the user pressed '1', '2', or '3'
-            if key == ord('1'):
-                counter+=1
-            elif key == ord('2'):
-                print("User pressed '2' for image:", image_name)
-                counter+=1
-            elif key == ord('d'):
-                print("User pressed 'd' for image:", image_name)
-                counter+=1
-            elif key == ord('b'):
-                print("User pressed 'b' for image:", image_name)
-                if counter > 0:
-                    counter-=1
-                else:
-                    print("There is no previous image!")
-
-            elif key == ord('q'):
-                print("Program terminated!")
-                break
-            else:
-                print("Invalid input.")
-
-        # Close the window
-        cv2.destroyAllWindows()
-  
-        print("End of the images!")
-
-    def start2(self):
+    def start_process(self):
         image_counter = 0
         object_counter = 0
         with open("info.txt","r") as file:
@@ -131,6 +79,7 @@ class DefineDistance:
 
                 elif key == ord("q"):
                     print("\nProgram terminated!\n")
+                    print("Last image was: ",self.files_sorted[image_counter])
                     break
                 
         print("\nEnd of the images!\n")
@@ -141,7 +90,3 @@ class DefineDistance:
 
 
 
-
-
-dd = DefineDistance("/Users/yusufs/Desktop/NewEye/ScreenShots")
-dd.start2()

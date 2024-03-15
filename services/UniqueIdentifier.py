@@ -7,6 +7,4 @@ def generate_unique_identifier():
     return ''.join(random.choice(letters) for _ in range(2)) + \
            ''.join(random.choice(digits) for _ in range(3))
 
-# Example usage:
-identifier = generate_unique_identifier()
-print(identifier)
+
