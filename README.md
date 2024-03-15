@@ -40,6 +40,6 @@ python3 start_distance_process.py
 ```
 6. Just enter the path of your video 
 ```
-Enter the path of your video:
+Enter video path:
 ```
    
