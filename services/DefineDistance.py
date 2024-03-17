@@ -1,4 +1,5 @@
 from services.ExcelControl import ExcelControl
+from services.JsonControl import JsonControl
 import os
 import cv2
 
@@ -10,30 +11,47 @@ class DefineDistance:
         self.excel = ExcelControl()
         self.files = os.listdir(self.directory)
         self.files_sorted = sorted(self.files)
+        self.jsonObj = JsonControl() 
+        
 
 
     def start_process(self):
-        image_counter = 0
-        object_counter = 0
-        with open("info.txt","r") as file:
+        isBackward = False
+
+        with open(os.path.join(os.getcwd(),"services","info.txt"),"r") as file:
             lines = file.readlines()
 
-        while object_counter < len(lines):
-            line = lines[object_counter]
+
+        while self.jsonObj.check_objectCounter() < len(lines):
+
+            line = lines[self.jsonObj.check_objectCounter()]
             if line.startswith("***"):
-                cv2.destroyAllWindows()
-                image_counter +=1 
-                object_counter +=1
-                continue
+                if isBackward:
+                    self.jsonObj.decrease_imageCounter()
+                    self.jsonObj.decrease_objectCounter()
+                    cv2.destroyAllWindows()
+                    continue
+                else:
+                    self.jsonObj.increase_imageCounter()
+                    self.jsonObj.increase_objectCounter()
+                    cv2.destroyAllWindows()
+                    continue
+            
             else:
                 line_splitted = line.split(",")
                 object_name = line_splitted[0]
                 rect_area = line_splitted[1]
                 region = line_splitted[2]
 
-                image_path = os.path.join(self.directory,self.files_sorted[image_counter])
+                try:
+                    image_path = os.path.join(self.directory,self.files_sorted[self.jsonObj.check_imageCounter()])
 
-                image = cv2.imread(image_path)
+                    image = cv2.imread(image_path)
+                except:
+                    print("End of the images!")
+                    self.jsonObj.increase_control()
+                    self.excel.close_excel()
+                    break
 
                 if image is None:
                     print("Error! Unable to load image", image_path)
@@ -42,7 +60,7 @@ class DefineDistance:
                 print("\n****************************************\nEnter an input\n1- Close\n2- Not Close\nb- Back to the previous object\nd- Delete the object\nq- Quit the program\n****************************************\n")
 
 
-                cv2.imshow(self.files_sorted[image_counter],image)
+                cv2.imshow(self.files_sorted[self.jsonObj.check_imageCounter()],image)
 
                 print(f"Enter an input for {object_name}:")
 
@@ -50,39 +68,50 @@ class DefineDistance:
 
                 if key == ord("1"):
                     print(f"{object_name} is close")
-                    self.excel.add_info_to_table("A",object_name.split(".")[0])
-                    self.excel.add_info_to_table("B",str(rect_area))
-                    self.excel.add_info_to_table("C",str(region))
-                    self.excel.add_info_to_table("D","1")
-                    self.excel.increase_row()
-                    object_counter += 1
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"A",object_name.split(".")[0])
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"B",str(rect_area))
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"C",str(region))
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"D","1")
+                    self.jsonObj.increase_rowCounter()
+                    self.jsonObj.increase_objectCounter()
+                    isBackward = False
+
                 elif key == ord("2"):
                     print(f"\n{object_name} is not close\n")
-                    self.excel.add_info_to_table("A",object_name.split(".")[0])
-                    self.excel.add_info_to_table("B",str(rect_area))
-                    self.excel.add_info_to_table("C",str(region))
-                    self.excel.add_info_to_table("D","2")
-                    self.excel.increase_row()
-                    object_counter += 1
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"A",object_name.split(".")[0])
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"B",str(rect_area))
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"C",str(region))
+                    self.excel.add_info_to_table(self.jsonObj.check_rowCounter(),"D","2")
+                    self.jsonObj.increase_rowCounter()
+                    self.jsonObj.increase_objectCounter()
+                    isBackward = False
+
                 elif key == ord("b"):
-                    if object_counter <= 0:
+                    if self.jsonObj.check_objectCounter() <= 0:
                         print("\nThere is no previous object!\n")
                         continue
+
                     else:
-                        object_counter -= 1
-                        self.excel.decrease_row()
+                        self.jsonObj.decrease_objectCounter()
+                        if self.jsonObj.check_rowCounter() > 2:
+                            self.jsonObj.decrease_rowCounter()
+                        isBackward = True
                 
                 elif key == ord("d"):
-                    object_counter+=1
+                    self.jsonObj.increase_objectCounter()
                     print("\n Object deleted! Press b to cancel\n")
+                    isBackward = False
                     continue
 
                 elif key == ord("q"):
                     print("\nProgram terminated!\n")
-                    print("Last image was: ",self.files_sorted[image_counter])
+                    isBackward = False
                     break
-                
-        print("\nEnd of the images!\n")
+        if len(lines) == self.jsonObj.check_objectCounter():
+            self.jsonObj.increase_control()
+
+
+        self.excel.close_excel()
                 
                 
 

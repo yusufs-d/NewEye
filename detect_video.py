@@ -116,7 +116,7 @@ def detect_and_take_screenshot(video,modeldir="sample_model",grapname = "detect.
     start_time = time.time()
     counter = 0
     video_name = str(video).split(".")[0]
-    os.makedirs("ScreenShots",exist_ok=True)
+    os.makedirs(os.path.join("services","ScreenShots"),exist_ok=True)
     while(video.isOpened()):
 
         # Acquire frame and resize to expected shape [1xHxWx3]
@@ -176,14 +176,16 @@ def detect_and_take_screenshot(video,modeldir="sample_model",grapname = "detect.
         current_time = time.time() - start_time
         if( current_time >= 10):
             counter += 1
-            file = os.path.join("ScreenShots",f"{video_name}_screenshot_{counter}.png")
-            cv2.imwrite(file,frame)
-            print(f"{video_name}_screenshot_{counter}.png saved sucessfully")
-            with open("info.txt","a") as file:
-                for i in info:
-                    file.write(i)
-                file.write("***\n")
-            print("info.txt file updated sucessfully")
+            if len(info) != 0 :
+                file = os.path.join("services","ScreenShots",f"screenshot_{counter}.png")
+                cv2.imwrite(file,frame)
+                print(f"screenshot_{counter}.png saved sucessfully")
+            if len(info) != 0:
+                with open(os.path.join("services","info.txt"),"a") as file:
+                    for i in info:
+                        file.write(i)
+                    file.write("***\n")
+                print("info.txt file updated sucessfully")
 
             start_time = time.time()
 

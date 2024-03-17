@@ -1,5 +1,7 @@
 import os
 import openpyxl # Module  for the excel operations
+from services.JsonControl import JsonControl
+import sys
 
 class ExcelControl:
     """
@@ -10,23 +12,41 @@ class ExcelControl:
     
     def __init__(self):
 
+        self.jsonObj = JsonControl()
+        self.path = self.jsonObj.checkExcelPath()
 
-        # Workbook() takes one, non-optional, argument
-        # which is the filename that we want to create.
-        self.workbook = openpyxl.Workbook()
-        self.path = "object-distance.xlsx"
-        self.table_row = 2
+        if self.jsonObj.check_rowCounter() == 2:
+            
+            # Workbook() takes one, non-optional, argument
+            # which is the filename that we want to create.
+            self.workbook = openpyxl.Workbook()
+            # The workbook object is then used to add new
+            # worksheet via the add_worksheet() method.
+            self.worksheet = self.workbook.active # Select worksheet as default
+            self.worksheet.title = "Objects-Distances" # Set worksheet title
 
-        if os.path.exists("object-distance.xlsx"): # Check the excel file if exists
-            self.path = "object-distance-2.xlsx"
+            # It creates Scene Table with Scene Name and Tag Columns
+            self.create_table()
+        else:
+            self.workbook = openpyxl.load_workbook(os.path.join(
+                os.getcwd(),
+                "services",
+                "object-distance.xlsx"
+            ))
 
-        # The workbook object is then used to add new
-        # worksheet via the add_worksheet() method.
-        self.worksheet = self.workbook.active # Select worksheet as default
-        self.worksheet.title = "Objects-Distances" # Set worksheet title
 
-        # It creates Scene Table with Scene Name and Tag Columns
-        self.create_table()
+
+        self.workbook.close()
+
+# Yeniden açarak yazma modunda açın
+        self.workbook = openpyxl.load_workbook(os.path.join(
+                os.getcwd(),
+                "services",
+                "object-distance.xlsx"
+            ))
+        self.worksheet = self.workbook.active
+
+
 
     
     def create_table(self):
@@ -36,21 +56,24 @@ class ExcelControl:
         self.worksheet["B1"].value = 'Size'
         self.worksheet["C1"].value = 'Region'
         self.worksheet["D1"].value = 'isClose'
-        self.workbook.save(self.path) # Finally, save the excel file
+        self.workbook.save(os.path.join(
+            os.getcwd(),
+            "services",
+            "object-distance.xlsx"
+        )) # Finally, save the excel file
 
     
-    def add_info_to_table(self,cell,info):
+    def add_info_to_table(self,row,cell,info):
         # Args: filename-> Filename to add excel table
-        self.worksheet[f"{cell}{self.table_row}"].value = info # Set cell value
-        self.workbook.save(self.path) # Finally, save the excel file
-        
-    def increase_row(self):
-        self.table_row += 1
-
-    def decrease_row(self):
-        if self.table_row > 2:
-            self.table_row -= 1
-        else:
-            return
+        self.worksheet[f"{cell}{row}"].value = info # Set cell value
+        self.workbook.save(os.path.join(
+            os.getcwd(),
+            "services",
+            "object-distance.xlsx"
+        )) # Finally, save the excel file
+ 
+    
+    def close_excel(self):
+        self.workbook.close()
         
 
