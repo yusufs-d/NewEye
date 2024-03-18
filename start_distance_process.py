@@ -40,7 +40,6 @@ elif jsonObj.check_control() == 1:
 
     define_distance_process = DefineDistance(os.path.join("services","ScreenShots"))
     define_distance_process.start_process()
-    print("There is an error while starting 'Define Distance' process ")
 
 else:
     decision = input("Looks like 'define distance process' has completed. Do you want to start the whole process again?\nBE CAREFUL: Your ScreenShots folder and Excel File will be DELETED! (yes/no): ")
