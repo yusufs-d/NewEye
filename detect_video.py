@@ -175,8 +175,8 @@ def detect_and_take_screenshot(video,modeldir="sample_model",grapname = "detect.
 
         current_time = time.time() - start_time
         if( current_time >= 10):
-            counter += 1
             if len(info) != 0 :
+                counter += 1
                 file = os.path.join("services","ScreenShots",f"screenshot_{counter}.png")
                 cv2.imwrite(file,frame)
                 print(f"screenshot_{counter}.png saved sucessfully")
