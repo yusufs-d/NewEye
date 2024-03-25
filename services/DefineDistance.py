@@ -10,7 +10,7 @@ class DefineDistance:
         self.directory = directory
         self.excel = ExcelControl()
         self.files = os.listdir(self.directory)
-        self.files_sorted = sorted(self.files)
+        self.files_sorted = sorted(self.files, key=lambda x: int(x.split("_")[1]))
         self.jsonObj = JsonControl() 
         
 
