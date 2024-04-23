@@ -12,7 +12,6 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["--modeldir", "sample_model", "--video", "istanbul.mp4"]
         },
         {
             "name": "Python Debugger: Current File",
