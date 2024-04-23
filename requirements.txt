@@ -1,3 +1,6 @@
 opencv-python
 tensorflow
 openpyxl
+joblib
+scikit-learn
+pandas
