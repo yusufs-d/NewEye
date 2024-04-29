@@ -1,12 +1,13 @@
 import sys
 import time
 import os
-from detect_video import detect_and_take_screenshot
+from services.DetectAndScreenshot import DetectAndScreenshot
 from services.DefineDistance import DefineDistance
 from services.JsonControl import JsonControl
 from services.ResetToDefault import reset
 
 jsonObj = JsonControl()
+
 if jsonObj.check_control() == 0:
     video = input("Enter video path: ")
     if os.path.exists(video):
@@ -16,8 +17,9 @@ if jsonObj.check_control() == 0:
         if os.path.exists("info.txt"):
             print("info.txt file already exists. Please remove it before the process")
             sys.exit(1)
-    
-        detect_and_take_screenshot(video)
+
+        distance_process = DetectAndScreenshot(video)
+        distance_process.detect_and_take_screenshot()
         jsonObj.increase_control()
     
 
