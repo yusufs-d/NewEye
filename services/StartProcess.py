@@ -11,9 +11,9 @@ import time
 from threading import Thread
 import importlib.util
 import pandas as pd
-from GetRegion import get_region
-from Speak import play_audio
-from VideoStream import VideoStream
+from services.GetRegion import get_region
+from services.Speak import play_audio
+from services.VideoStream import VideoStream
 
 
 class StartProcess:
