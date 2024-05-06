@@ -3,6 +3,7 @@
 
 import os
 import threading
+import time
 import cv2
 import numpy as np
 import importlib.util
@@ -105,9 +106,11 @@ class DetectVideo:
         imW = 1280
         imH = 720
 
-
+        fps = video.get(cv2.CAP_PROP_FPS)
+        frame_duration = 1 / fps  # saniye cinsinden
 
         while(video.isOpened()):
+            start_time = time.time()
 
             # Acquire frame and resize to expected shape [1xHxWx3]
             ret, frame = video.read()
@@ -208,12 +211,15 @@ class DetectVideo:
 
             # All the results have been drawn on the frame, so it's time to display it.
             cv2.imshow('Object detector', frame)
+            # Geçen süre hesaplanır ve kalan süre kadar beklenir
+            elapsed_time = time.time() - start_time
+            if elapsed_time < frame_duration:
+                time.sleep(frame_duration - elapsed_time)  # kalan süre kadar bekler
 
-            # Press 'q' to quit
-            if cv2.waitKey(1) == ord('q'):
+            # 'q' tuşuna basılırsa döngüden çık
+            if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
-        # Clean up
+                # Clean up
         video.release()
         cv2.destroyAllWindows()
 
