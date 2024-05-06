@@ -107,7 +107,7 @@ class DetectVideo:
         imH = 720
 
         fps = video.get(cv2.CAP_PROP_FPS)
-        frame_duration = 1 / fps  # saniye cinsinden
+        frame_duration = 1 / fps
 
         while(video.isOpened()):
             start_time = time.time()
@@ -211,12 +211,10 @@ class DetectVideo:
 
             # All the results have been drawn on the frame, so it's time to display it.
             cv2.imshow('Object detector', frame)
-            # Geçen süre hesaplanır ve kalan süre kadar beklenir
             elapsed_time = time.time() - start_time
             if elapsed_time < frame_duration:
-                time.sleep(frame_duration - elapsed_time)  # kalan süre kadar bekler
+                time.sleep(frame_duration - elapsed_time)
 
-            # 'q' tuşuna basılırsa döngüden çık
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
                 # Clean up
