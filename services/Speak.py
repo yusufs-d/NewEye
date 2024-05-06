@@ -4,7 +4,6 @@ from pydub import AudioSegment
 from pydub.effects import speedup
 from pydub.playback import play
 from pygame import mixer, time as tm
-import simpleaudio as sa
 import os
 
 
