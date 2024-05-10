@@ -109,8 +109,7 @@ class DetectVideo:
         imH = 720
 
         fps = video.get(cv2.CAP_PROP_FPS)
-        frame_duration = 1 / fps 
-        play_audio("ready.mp3")
+
         while(video.isOpened()):
             start_time = time.time()
 
