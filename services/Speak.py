@@ -50,10 +50,5 @@ def buildSounds(sounds : list,speed : float, path = "sounds"):
             path=path)
 
 
-sounds = [
-    ("bicycle 11 o'clock","bicycle11"),
-    ("bicycle 1 o'clock","bicycle1"),
-    ("train 11 o'clock","train11"),
-    ("train 1 o'clock","train1"),
 
-]
+

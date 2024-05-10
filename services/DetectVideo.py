@@ -7,7 +7,7 @@ import time
 import cv2
 import numpy as np
 import importlib.util
-from services.GetRegion import get_region
+from services.GetRegion import get_region, get_region_with_middle
 from joblib import load
 import pandas as pd
 from services.Speak import play_audio
@@ -16,6 +16,8 @@ from services.Speak import play_audio
 
 class DetectVideo:
     def __init__(self,video,modeldir="sample_model",grapname = "detect.tflite", labelmap = "labelmap.txt",threshold = 0.5):
+        play_audio("opening.wav")
+        play_audio("loading.mp3")
         self.MODEL_NAME = modeldir
         self.GRAPH_NAME = grapname
         self.LABELMAP_NAME = labelmap
@@ -107,8 +109,8 @@ class DetectVideo:
         imH = 720
 
         fps = video.get(cv2.CAP_PROP_FPS)
-        frame_duration = 1 / fps  # saniye cinsinden
-
+        frame_duration = 1 / fps 
+        play_audio("ready.mp3")
         while(video.isOpened()):
             start_time = time.time()
 
@@ -165,6 +167,7 @@ class DetectVideo:
                                             'Size': [rect_area],
                                             'Region': [region]})
                     object_name_to_sound_11 = object_name.strip() + "11" + ".mp3"
+                    object_name_to_sound_12 = object_name.strip() + "12" + ".mp3"
                     object_name_to_sound_1 = object_name.strip() + "1" + ".mp3"
                     
 
@@ -175,10 +178,15 @@ class DetectVideo:
                         if predicted_result[0] == 1:
                             print(f"{object_name} detected at region {region}. Size is : {rect_area}")
                             predicted_result_text = "Close"
-                            if region == 1 or region == 3:
+                            
+                            region_with_middle = get_region_with_middle((xmin,ymin,xmax,ymax),imW,imH)
+
+                            if region_with_middle == 1 or region_with_middle == 3:
                                 threading.Thread(target=play_audio,args=(object_name_to_sound_11,)).start()
-                            elif region == 2 or region == 4:
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()  
+                            elif region_with_middle == 2 or region_with_middle == 4:
+                                threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()
+                            elif region_with_middle == 'middle':
+                                threading.Thread(target=play_audio,args=(object_name_to_sound_12,)).start()
 
 
 
@@ -198,10 +206,14 @@ class DetectVideo:
                             print(f"{object_name} detected at region {region}. Size is : {rect_area}")
 
                             predicted_result_text = "Close"
-                            if region == 1 or region == 3:
+                            region_with_middle = get_region_with_middle((xmin,ymin,xmax,ymax),imW,imH)
+
+                            if region_with_middle == 1 or region_with_middle == 3:
                                 threading.Thread(target=play_audio,args=(object_name_to_sound_11,)).start()
-                            elif region == 2 or region == 4:
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start() 
+                            elif region_with_middle == 2 or region_with_middle == 4:
+                                threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()
+                            elif region_with_middle == 'middle':
+                                threading.Thread(target=play_audio,args=(object_name_to_sound_12,)).start()
 
 
 
@@ -211,15 +223,13 @@ class DetectVideo:
 
             # All the results have been drawn on the frame, so it's time to display it.
             cv2.imshow('Object detector', frame)
-            # Geçen süre hesaplanır ve kalan süre kadar beklenir
             elapsed_time = time.time() - start_time
             if elapsed_time < frame_duration:
-                time.sleep(frame_duration - elapsed_time)  # kalan süre kadar bekler
+                time.sleep(frame_duration - elapsed_time)
 
-            # 'q' tuşuna basılırsa döngüden çık
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-                # Clean up
+
         video.release()
         cv2.destroyAllWindows()
 

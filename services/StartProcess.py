@@ -18,7 +18,10 @@ from services.VideoStream import VideoStream
 
 class StartProcess:
     def __init__(self):
-        
+
+        play_audio("opening.wav")
+        play_audio("loading.mp3")
+
         self.MODEL_NAME = "sample_model"
         self.GRAPH_NAME = "detect.tflite"
         self.LABELMAP_NAME = "labelmap.txt"
@@ -112,7 +115,7 @@ class StartProcess:
         freq = cv2.getTickFrequency()
 
 
-
+        play_audio("ready.mp3")
         #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
         while True:
 
