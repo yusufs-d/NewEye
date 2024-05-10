@@ -37,9 +37,3 @@ def get_region_with_middle(rectangle, width, height, middle_width_percent=30):
         else:
             return 4
 
-# Example usage
-rectangle = (450, 100, 550, 200)  # Example rectangle coordinates
-screen_width = 1000
-screen_height = 500
-region = get_region_with_middle(rectangle, screen_width, screen_height)
-print(f"The object is located in the region: {region}")
