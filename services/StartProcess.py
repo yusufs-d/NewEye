@@ -232,6 +232,3 @@ class StartProcess:
         # Clean up
         cv2.destroyAllWindows()
         self.videostream.stop()
-
-process = StartProcess()
-process.start_detection_process()
