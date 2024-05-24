@@ -179,16 +179,17 @@ class StartProcess:
                         predicted_result = self.logRegModel.predict(new_data)
                         predicted_result_text = ""
                         if predicted_result[0] == 1:
-                            print(f"{object_name} detected at region {region}. Size is : {rect_area}")
-                            predicted_result_text = "Close"
-                            region_with_middle = get_region_with_middle((xmin,ymin,xmax,ymax),self.imW,self.imH)
+                            if not (object_name == "person" and rect_width > 600): 
+                                print(f"{object_name} detected at region {region}. Size is : {rect_area}")
+                                predicted_result_text = "Close"
+                                region_with_middle = get_region_with_middle((xmin,ymin,xmax,ymax),self.imW,self.imH)
 
-                            if region_with_middle == 1 or region_with_middle == 3:
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_11,)).start()
-                            elif region_with_middle == 2 or region_with_middle == 4:
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()
-                            elif region_with_middle == 'middle':
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_12,)).start()
+                                if region_with_middle == 1 or region_with_middle == 3:
+                                    threading.Thread(target=play_audio,args=(object_name_to_sound_11,)).start()
+                                elif region_with_middle == 2 or region_with_middle == 4:
+                                    threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()
+                                elif region_with_middle == 'middle':
+                                    threading.Thread(target=play_audio,args=(object_name_to_sound_12,)).start()
                     except:
                         new_data = pd.DataFrame({'ObjectName': ["person"],
                                 'Size': [rect_area],
@@ -198,17 +199,20 @@ class StartProcess:
                         predicted_result_text = ""
 
                         if predicted_result[0] == 1:
-                            print(f"{object_name} detected at region {region}. Size is : {rect_area}")
+                            
+                            if not (object_name == "person" and rect_width > 600):
 
-                            predicted_result_text = "Close"
-                            region_with_middle = get_region_with_middle((xmin,ymin,xmax,ymax),self.imW,self.imH)
+                                print(f"{object_name} detected at region {region}. Size is : {rect_area}")
 
-                            if region_with_middle == 1 or region_with_middle == 3:
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_11,)).start()
-                            elif region_with_middle == 2 or region_with_middle == 4:
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()
-                            elif region_with_middle == 'middle':
-                                threading.Thread(target=play_audio,args=(object_name_to_sound_12,)).start()        
+                                predicted_result_text = "Close"
+                                region_with_middle = get_region_with_middle((xmin,ymin,xmax,ymax),self.imW,self.imH)
+
+                                if region_with_middle == 1 or region_with_middle == 3:
+                                    threading.Thread(target=play_audio,args=(object_name_to_sound_11,)).start()
+                                elif region_with_middle == 2 or region_with_middle == 4:
+                                    threading.Thread(target=play_audio,args=(object_name_to_sound_1,)).start()
+                                elif region_with_middle == 'middle':
+                                    threading.Thread(target=play_audio,args=(object_name_to_sound_12,)).start()        
                     cv2.putText(frame, f"{object_name} {predicted_result_text}", (xmin, label_ymin-7), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0), 2) # Draw label text
 
 
