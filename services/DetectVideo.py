@@ -112,6 +112,11 @@ class DetectVideo:
         frame_duration = 1 / fps 
         play_audio("ready.mp3")
 
+        # Create a named window
+        cv2.namedWindow('Object detector', cv2.WINDOW_NORMAL)
+        # Resize the window
+        cv2.resizeWindow('Object detector', 640, 480)
+        
         while(video.isOpened()):
             start_time = time.time()
 
