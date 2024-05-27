@@ -116,6 +116,12 @@ class StartProcess:
 
 
         play_audio("ready.mp3")
+
+        # Create a named window
+        cv2.namedWindow('Object detector', cv2.WINDOW_NORMAL)
+        # Resize the window
+        cv2.resizeWindow('Object detector', 640, 480)
+        
         #for frame1 in camera.capture_continuous(rawCapture, format="bgr",use_video_port=True):
         while True:
 
