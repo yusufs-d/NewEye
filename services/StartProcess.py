@@ -21,6 +21,7 @@ class StartProcess:
 
         play_audio("opening.wav")
         play_audio("loading.mp3")
+        play_audio("contact.mp3")
 
         self.MODEL_NAME = "sample_model"
         self.GRAPH_NAME = "detect.tflite"
