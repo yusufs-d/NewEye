@@ -2,6 +2,13 @@
 
 NewEye is an object detection and voice feedback system developed to help visually impaired individuals better perceive the objects around them. Using TensorFlow Lite, it detects nearby objects and audibly announces the object's name and direction.
 
+<img width="1267" alt="Screenshot 2024-06-06 at 16 13 43" src="https://github.com/yusufs-d/NewEye/assets/74401288/c8b82463-885f-4c1b-8f1e-7d06e6d5e218">
+
+<img width="1267" alt="Screenshot 2024-06-06 at 16 13 55" src="https://github.com/yusufs-d/NewEye/assets/74401288/08a93c3d-433b-4edb-8154-11d562b874de">
+
+<img width="1267" alt="Screenshot 2024-06-06 at 16 16 27" src="https://github.com/yusufs-d/NewEye/assets/74401288/01a72652-c5b2-446a-bc6d-2fdf891dee1a">
+
+
 ## Features
 
 - **Real-Time Object Detection:** Quickly and efficiently detects objects using TensorFlow Lite.
