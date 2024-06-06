@@ -29,7 +29,7 @@ NewEye is an object detection and voice feedback system developed to help visual
 
 ---
 
-I developed this project to enhance the quality of life for visually impaired individuals, and I greatly value your feedback. Please help us by contributing or providing feedback!
+I developed this project to enhance the quality of life for visually impaired individuals, and I greatly value your feedback. Please help me by contributing or providing feedback!
 
 # Usage
 ## Follow these steps for initial usage
