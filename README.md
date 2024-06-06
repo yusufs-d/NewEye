@@ -15,9 +15,9 @@ NewEye is an object detection and voice feedback system developed to help visual
 - **Proximity Detection:** Uses a custom machine learning algorithm to determine the proximity of objects.
 - **Region Detection:** Divides the screen into four main regions to identify the object's location.
 - **Voice Feedback:** Audibly announces the detected object's name and direction.
-- **User-Friendly:** Simple and intuitive voice interface for easy use.
+- **User-Friendly:** Simple and intuitive voice interface for easy use. It can be used with any camera compatible with Pc.
 
-## Technical Details
+## Technical Details.
 
 - **OpenCV-Python and TensorFlow Lite:** Utilized for object detection processes.
 - **Proximity Algorithm:** Determines object proximity based on parameters such as pixel size on the screen, the region of the screen, and the object's name.
