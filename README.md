@@ -1,5 +1,6 @@
 # NewEye: Object Detection and Voice Feedback for Visually Impaired Individuals
-Developed by Yusuf Salih Demir
+
+*Developed by **Yusuf Salih Demir***
 
 NewEye is an object detection and voice feedback system developed to help visually impaired individuals better perceive the objects around them. Using TensorFlow Lite, it detects nearby objects and audibly announces the object's name and direction.
 
@@ -27,7 +28,7 @@ NewEye is an object detection and voice feedback system developed to help visual
 
  I am continuously developing this project and welcome contributions from the community. If you would like to contribute, please send a pull request or report an issue.
 
----
+
 
 I developed this project to enhance the quality of life for visually impaired individuals, and I greatly value your feedback. Please help me by contributing or providing feedback!
 
